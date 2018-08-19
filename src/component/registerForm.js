@@ -1,17 +1,38 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 import { Card, Button } from './common';
 import firebase from 'firebase';
 
 class registerForm extends Component {
-    state = { email: '', password: '' };
+    state = {
+        email: '',
+        password: '',
+        error: '',
+        loading: false
+    };
 
-    onLoginButtonPress = () => {
+    onRegisterButtonPress = () => {
         const { email, password } = this.state;
+
+        this.setState({ loading: true });
         firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
-            .then(() => { alert("Register Successful , " + email + " " + password); })
-            .catch((msgError) => { alert(msgError.message); });
+            .then(() => {
+                this.setState({ loading: false });
+                alert("Successful , " + email + " " + password);
+            })
+            .catch((msgError) => {
+                this.setState({ loading: false });
+                alert(msgError.message);
+            });
+    }
+
+    renderButton() {
+        if (this.state.loading) {
+            return (<ActivityIndicator size='small' />);
+        } else {
+            return (<Button style={coinDetailStyle.buttonLogin} onPress={this.onRegisterButtonPress.bind(this)}>Register</Button>);
+        }
     }
 
     render() {
@@ -39,7 +60,8 @@ class registerForm extends Component {
                                 onChangeText={str => this.setState({ password: str })}>
                             </TextInput>
                         </View>
-                        <Button style={coinDetailStyle.buttonLogin} onPress={this.onLoginButtonPress.bind(this)}>Register</Button>
+
+                        {this.renderButton()}
 
                     </View>
 

@@ -1,18 +1,38 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import { Card, Button } from './common';
 import firebase from 'firebase';
 
 class LoginForm extends Component {
-    state = { email: 'smart.dental.clinic@gmail.com', password: '123456' };
+    state = {
+        email: 'smart.dental.clinic@gmail.com',
+        password: '123456',
+        error: '',
+        loading: false
+    };
 
     onLoginButtonPress = () => {
         const { email, password } = this.state;
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(() => { alert("Login Successful , " + email + " " + password); })
-            .catch((msgError) => { alert(msgError.message); });
 
+        this.setState({ loading: true });
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(() => {
+                this.setState({ loading: false });
+                alert("Successful , " + email + " " + password);
+            })
+            .catch((msgError) => {
+                this.setState({ loading: false });
+                alert(msgError.message);
+            });
+    }
+
+    renderButton() {
+        if (this.state.loading) {
+            return (<ActivityIndicator size='small' />);
+        } else {
+            return (<Button style={coinDetailStyle.buttonLogin} onPress={this.onLoginButtonPress.bind(this)}>Login</Button>);
+        }
     }
 
     render() {
@@ -30,6 +50,7 @@ class LoginForm extends Component {
                                 onChangeText={str => this.setState({ email: str })}>
                             </TextInput>
                         </View>
+
                         <View style={coinDetailStyle.containerInput}>
                             <Text style={coinDetailStyle.textForm}>Password</Text>
                             <TextInput style={coinDetailStyle.textInputPassword}
@@ -40,7 +61,8 @@ class LoginForm extends Component {
                                 onChangeText={str => this.setState({ password: str })}>
                             </TextInput>
                         </View>
-                        <Button style={coinDetailStyle.buttonLogin} onPress={this.onLoginButtonPress.bind(this)}>Login</Button>
+                        
+                        {this.renderButton()}
 
                     </View>
 
