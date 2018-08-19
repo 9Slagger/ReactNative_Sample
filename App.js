@@ -8,24 +8,26 @@ import {
 import firebase from 'firebase';
 import { Header } from './src/component/common';
 import LoginForm from './src/component/loginForm';
+import RegisterForm from './src/component/registerForm'
 
 export default class App extends Component {
   componentDidMount() {
     const config = {
-      apiKey: "AIzaSyBFH8V2pP-yza611OKXhweEQ2jisJmIhLk",
-      authDomain: "react-native-93455.firebaseapp.com",
-      databaseURL: "https://react-native-93455.firebaseio.com",
-      projectId: "react-native-93455",
-      storageBucket: "react-native-93455.appspot.com",
-      messagingSenderId: "943681050634"
+      apiKey: "AIzaSyDNKbpJAUfs5no6rARqB5kxGaSsPBobjWo",
+      authDomain: "samplereactnative-ebaa9.firebaseapp.com",
+      databaseURL: "https://samplereactnative-ebaa9.firebaseio.com",
+      projectId: "samplereactnative-ebaa9",
+      storageBucket: "",
+      messagingSenderId: "86863743038"
     };
     firebase.initializeApp(config);
   }
 
   render(props) {
     return (<View>
-      <Header headerText='Login' />
+      <Header headerText='Smart Dental Clinic' />
       <LoginForm />
+      <RegisterForm />
     </View>);
   }
 }

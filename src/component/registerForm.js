@@ -4,15 +4,14 @@ import PropTypes from 'prop-types';
 import { Card, Button } from './common';
 import firebase from 'firebase';
 
-class LoginForm extends Component {
-    state = { email: 'smart.dental.clinic@gmail.com', password: '123456' };
+class registerForm extends Component {
+    state = { email: '', password: '' };
 
     onLoginButtonPress = () => {
         const { email, password } = this.state;
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(() => { alert("Login Successful , " + email + " " + password); })
+        firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
+            .then(() => { alert("Register Successful , " + email + " " + password); })
             .catch((msgError) => { alert(msgError.message); });
-
     }
 
     render() {
@@ -40,7 +39,7 @@ class LoginForm extends Component {
                                 onChangeText={str => this.setState({ password: str })}>
                             </TextInput>
                         </View>
-                        <Button style={coinDetailStyle.buttonLogin} onPress={this.onLoginButtonPress.bind(this)}>Login</Button>
+                        <Button style={coinDetailStyle.buttonLogin} onPress={this.onLoginButtonPress.bind(this)}>Register</Button>
 
                     </View>
 
@@ -89,4 +88,4 @@ const coinDetailStyle = {
 
 };
 // export to render
-export default LoginForm;
+export default registerForm;
