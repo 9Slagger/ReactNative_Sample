@@ -25,15 +25,14 @@ const Header = (props) => {
     return (
         <View style={viewStyle}>
             <Text style={textStyle}>
-                {props.headerText + " " + props.secondText}
+                {props.headerText}
             </Text>
         </View>
     );
 };
 
 Header.PropTypes = {
-    headerText: PropTypes.string,
-    secondText: PropTypes.string
+    headerText: PropTypes.string
 };
 
 

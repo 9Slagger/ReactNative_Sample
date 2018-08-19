@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, ActivityIndicator } from 'react-native';
+import { Text, View, TextInput, ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 import { Card, Button } from './common';
 import firebase from 'firebase';
 
-class LoginForm extends Component {
+class registerForm extends Component {
     state = {
-        email: 'smart.dental.clinic@gmail.com',
-        password: '123456',
+        email: '',
+        password: '',
         error: '',
         loading: false
     };
 
-    onLoginButtonPress = () => {
+    onRegisterButtonPress = () => {
         const { email, password } = this.state;
 
         this.setState({ loading: true });
-        firebase.auth().signInWithEmailAndPassword(email, password)
+        firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
             .then(() => {
                 this.setState({ loading: false });
-                alert("Login Successful , " + email + " " + password);
+                alert("Register Successful , " + email + " " + password);
             })
             .catch((msgError) => {
                 this.setState({ loading: false });
@@ -31,7 +31,7 @@ class LoginForm extends Component {
         if (this.state.loading) {
             return (<ActivityIndicator size='small' />);
         } else {
-            return (<Button style={coinDetailStyle.buttonLogin} onPress={this.onLoginButtonPress.bind(this)}>Login</Button>);
+            return (<Button style={coinDetailStyle.buttonLogin} onPress={this.onRegisterButtonPress.bind(this)}>Register</Button>);
         }
     }
 
@@ -50,7 +50,6 @@ class LoginForm extends Component {
                                 onChangeText={str => this.setState({ email: str })}>
                             </TextInput>
                         </View>
-
                         <View style={coinDetailStyle.containerInput}>
                             <Text style={coinDetailStyle.textForm}>Password</Text>
                             <TextInput style={coinDetailStyle.textInputPassword}
@@ -61,7 +60,7 @@ class LoginForm extends Component {
                                 onChangeText={str => this.setState({ password: str })}>
                             </TextInput>
                         </View>
-                        
+
                         {this.renderButton()}
 
                     </View>
@@ -111,4 +110,4 @@ const coinDetailStyle = {
 
 };
 // export to render
-export default LoginForm;
+export default registerForm;
