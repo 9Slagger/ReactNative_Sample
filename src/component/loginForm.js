@@ -19,7 +19,7 @@ class LoginForm extends Component {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(() => {
                 this.setState({ loading: false });
-                alert("Successful , " + email + " " + password);
+                alert("Login Successful , " + email + " " + password);
             })
             .catch((msgError) => {
                 this.setState({ loading: false });

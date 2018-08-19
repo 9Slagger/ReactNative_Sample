@@ -19,7 +19,7 @@ class registerForm extends Component {
         firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
             .then(() => {
                 this.setState({ loading: false });
-                alert("Successful , " + email + " " + password);
+                alert("Register Successful , " + email + " " + password);
             })
             .catch((msgError) => {
                 this.setState({ loading: false });
